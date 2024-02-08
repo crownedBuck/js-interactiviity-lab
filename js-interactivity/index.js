@@ -1,35 +1,60 @@
-console.log("hello, world!")
 
-const theButton = document.querySelector('button');
+// console.log("hello, world!")
 
-const addMovie = () => {
-    const theForm = document.querySelector('form');
-    const inputField = theForm.querySelector('input');
-    const movieTitle = document.createElement('span');
-    const deleteBtn = document.createElement('button');
+// const theButton = document.querySelector('button');
+const message = document.querySelector("#message");
+
+const addMovie = (event) => {
+
+    event.preventDefault()
+    // const theForm = document.querySelector('form');
+    const inputField = document.querySelector('input');
+
     const movie = document.createElement('li');
     const theUl = document.querySelector('ul');
 
     console.log("addMovie working")
 
-    movie.textContent = inputField.value;
-    movie.appendChild(movieTitle);
+    const movieTitle = document.createElement('span');
+    movieTitle.textContent = inputField.value;
+    movieTitle.addEventListener("click", crossOffMovie); // put the click on the span
+    movie.appendChild(movieTitle); // put the span inside the li
 
+    // initiallizing delete button and alowing it to be deleted
+    const deleteBtn = document.createElement('button');
     deleteBtn.textContent = "X";
+    deleteBtn.addEventListener("click", deleteMovie); // created here where if you click it does something
     movie.appendChild(deleteBtn);
+
+    // movie.addEventListener("click", crossOffMovie); // created here where if you click it does something
+
 
     theUl.appendChild(movie);
 
     // alert("addEventListener working");
 }
 
-const deleteMovie = movie.addEventListener ('click', (event) => { //how do you get that specific button?
-    event.target.parentNode.remove() 
-});
+function deleteMovie(event) {
+    message.textContent = "Movie deleted!";
+    console.log("deleteMovie was clicked")
+    event.target.parentNode.remove();
+}
 
-theButton.addEventListener('click', (event) => {
-    event.preventDefault()
-    addMovie();
-    console.log("addEventListener working")
-    // alert("addEventListener working " + eventHappened);
-});
+function crossOffMovie(event) {
+    event.target.classList.toggle("checked")
+    if (event.target.classList.contains("checked") === true) {
+        message.textContent = "This movie was watched!";
+    } else {
+        message.textContent = "Movie added back!";
+    }
+    console.log("crossOffMovie was clicked")
+}
+
+// theButton.addEventListener('click', (event) => {
+//     event.preventDefault()
+//     addMovie();
+//     console.log("addEventListener working")
+//     // alert("addEventListener working " + eventHappened);
+// });
+
+document.querySelector("form").addEventListener("submit", addMovie);

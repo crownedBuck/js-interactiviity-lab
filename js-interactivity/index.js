@@ -35,19 +35,24 @@ const addMovie = (event) => {
 }
 
 function deleteMovie(event) {
-    message.textContent = "Movie deleted!";
-    console.log("deleteMovie was clicked")
+    message.textContent = `${event.target.parentNode.firstChild.textContent} deleted!`;
+    message.classList.add('block')
+    console.log(`${event.target.parentNode.textContent} was clicked`)
     event.target.parentNode.remove();
+    revealMessage()
 }
 
 function crossOffMovie(event) {
     event.target.classList.toggle("checked")
+    message.classList.add('block')
+
     if (event.target.classList.contains("checked") === true) {
-        message.textContent = "This movie was watched!";
+        message.textContent = `${event.target.textContent} was watched!`;
     } else {
-        message.textContent = "Movie added back!";
+        message.textContent = `${event.target.textContent} added back!`;
     }
-    console.log("crossOffMovie was clicked")
+    console.log("crossOffMovie was clicked");
+    revealMessage();
 }
 
 // theButton.addEventListener('click', (event) => {
@@ -56,5 +61,12 @@ function crossOffMovie(event) {
 //     console.log("addEventListener working")
 //     // alert("addEventListener working " + eventHappened);
 // });
+
+
+const revealMessage = () => {
+    setTimeout(() => {
+        message.classList.add('hide')
+    }, 1000)
+}
 
 document.querySelector("form").addEventListener("submit", addMovie);
